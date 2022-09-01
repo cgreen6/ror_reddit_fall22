@@ -25,7 +25,19 @@ Rails.application.routes.draw do
 # get '/url', to: 'controller'
 # get '/ordered-subs', to: 'subs#osubs'
 #handles the main CRUD actions
-resources :subs
+resources :subs do
+  resources :topics
+end
+
+
+
+
+# # model with a parent and child then we need to do a do block
+# # but only do two levels deep
+# resources :parent1 do
+#   resources :child2
+# end
+
 
 # to view the routes in terminal: rails routes
 # recommended: first run your server - bundle exec rails s -p 3001
