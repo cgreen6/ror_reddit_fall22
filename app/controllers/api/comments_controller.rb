@@ -1,52 +1,52 @@
 class Api::CommentsController < ApplicationController
-  #model name = comment
-  # follow the pattern to fill the controller out
-  # then change to the parent child relationship - @parent.children
+  # model name is comment 
+  # follow the pattern to fill the controller out 
+  # then change to the parent and child relationship  
 
-  #-optional- callback, before_action to clean up the show update and destroy
+  # optional, callback, before_action to clean up the show update and destroy
+  before_action :set_topic
+  before_action :set_comment, only: [:show, :update, :destroy]
+
   def index
-    @comment = Comment.all
-    render component: 'Comment',
-    props:{ comment: @comment }
+    render json: @topic.comments 
   end
 
   def show
-    @comment = Comment.find(params[:id])
-    render component: 'Comment',
-    props: { comment: @comment }
+    render json: @comment 
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @topic.comments.new(comment_params)
     if @comment.save
-      do something or do somewhere
-      else
-        render component: 'CommentNew',
-        props: { comment: @comment }
-      end
+      render json: @comment
+    else 
+      render json: { errors: @comment.errors }, status: :unprocessable_entity
+    end
   end
 
   def update
-    @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
-      do something
-      else
-        render component: 'CommentEdit', props: { comment: @comment }
-      end
+      render json: @comment
+    else 
+      render json: { errors: @comment.errors }, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
     @comment.destroy
-    send somewhere
-    or
-    Comment.find(params[:id]).destroy
-    send somewhere
+    render json: { message: 'Comment deleted'}
   end
+
+  private 
+    def set_topic
+      @topic = Topic.find(params[:topic_id])
+    end
+
+    def set_comment
+      @comment = @topic.comments.find(params[:id])
+    end
+
+    def comment_params
+      params.require(:comment).permit(:title, :body)
+    end 
 end
-
-private
-  def comment_params
-
-    params.require(:comment).permit(:attr, :attr2, :everything the table has)
-  end
