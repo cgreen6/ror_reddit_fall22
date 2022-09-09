@@ -5,9 +5,9 @@
 Topic.delete_all
 Sub.delete_all 
 
-Sub.create(title: 'Food')
-Sub.create(title: 'Travel')
-Sub.create(title: 'Tech')
+# Sub.create(title: 'Food')
+# Sub.create(title: 'Travel')
+# Sub.create(title: 'Tech')
 
 5.times do
   @sub = Sub.create(
@@ -20,6 +20,6 @@ Sub.create(title: 'Tech')
       title: Faker::Games::SuperMario.game,
       body: Faker::Games::SuperMario.location,
       sub_id: @sub.id
-    )
+    ) 
   end
 end
