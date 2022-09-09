@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import TopicForm from './TopicForm';
 
-const TopicShow = ({ id, title, body, updateTopic }) => {
+const TopicShow = ({ id, title, body, updateTopic, deleteTopic }) => {
   const [editing, setEdit] = useState(false)
 
   return (
@@ -26,7 +26,9 @@ const TopicShow = ({ id, title, body, updateTopic }) => {
           Edit
         </button>
       }
-      <button>Delete</button>
+      <button onClick={() => deleteTopic(id)}>
+        Delete
+      </button>
       <button>Comments</button>
     </>
   )

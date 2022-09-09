@@ -28,13 +28,19 @@ const Topics = () => {
           if (t.id === id) {
             return res.data
           }
+          return t
         })
         setTopics(newUpdatedTopics)
-
-  })
+      })
+      .catch( err => console.log(err) )
+  }
 
   const deleteTopic = (id) => {
-
+    axios.delete(`/api/subs/${subId}/topics/${id}`)
+      .then( res => {
+        setTopics( topics.filter( t => t.id !== id ))
+      })
+      .catch( err => console.log(err) )
   }
 
   return (
@@ -45,6 +51,8 @@ const Topics = () => {
       />
       <TopicList 
         topics={topics}
+        updateTopic={updateTopic}
+        deleteTopic={deleteTopic}
       />
     </>
   )
